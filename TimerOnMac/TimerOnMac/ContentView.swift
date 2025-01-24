@@ -227,6 +227,7 @@ struct ContentView: View {
                     VStack {
                         
                         HStack {
+                            
                             Text("\(String(format: "%02d", timeRemaining / 3600)):\(String(format: "%02d", (timeRemaining % 3600) / 60)):\(String(format: "%02d", timeRemaining % 60))")
                                 .font(.system(size: 30))
                             Button(action: {
@@ -245,6 +246,13 @@ struct ContentView: View {
                         
                         
                         HStack {
+                            Button(){
+                                isOnTop.toggle()
+                            } label: {
+                                Image(systemName: isOnTop ? "pin.fill" : "pin.slash")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
                             
                             Button(action: {
                                 //                                isRunning.toggle()
