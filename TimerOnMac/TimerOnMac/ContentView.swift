@@ -1,15 +1,36 @@
 import SwiftUI
 import AVFoundation
 import Combine
+import Cocoa
+
+struct AlwaysOnTopView: NSViewRepresentable {
+    let window: NSWindow
+    let isAlwaysOnTop: Bool
+    
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        return view
+    }
+    
+    func updateNSView(_ nsView: NSView, context: Context) {
+        if isAlwaysOnTop {
+            window.level = .floating
+        } else {
+            window.level = .normal
+        }
+    }
+}
+
+
 
 struct ContentView: View {
     
     @State private var audioPlayer: AVAudioPlayer?
-    
+    @State private var isOnTop = true
     
     @State private var selectedHoursString: String = "00"
-    @State private var selectedMinutesString: String = "00"
-    @State private var selectedSecondString: String = "01"
+    @State private var selectedMinutesString: String = "10"
+    @State private var selectedSecondString: String = "00"
     
     @State private var lastSeletcted: Int = 0
     @State private var timeRemaining: Int = 0
@@ -23,8 +44,13 @@ struct ContentView: View {
     var body: some View {
         VStack {
             HStack {
-                
                 if !setDone {
+                    Button(){
+                        
+                        isOnTop.toggle()
+                    } label: {
+                        Image(systemName: isOnTop ? "pin.fill" : "pin.slash")
+                    }.buttonStyle(PlainButtonStyle())
                     VStack {
                         /// 시간 올리기 버튼
                         Button(action:  {
@@ -40,11 +66,10 @@ struct ContentView: View {
                             get: { selectedHoursString },
                             set: { newValue in
                                 selectedHoursString = String(newValue.filter { $0.isNumber }.prefix(2))
-                                
-                                
                             }
                         ))
                         .frame(width: 40, height: 50)
+                        .font(.system(size: 20))
                         
                         /// 시간 낮추기 버튼
                         Button(action:  {
@@ -61,6 +86,7 @@ struct ContentView: View {
                     
                     
                     Text(":")
+                        .font(.system(size: 20))
                     
                     VStack {
                         /// 분 올리기 버튼
@@ -89,6 +115,7 @@ struct ContentView: View {
                             
                         ))
                         .frame(width: 40, height: 50)
+                        .font(.system(size: 20))
                         /// 분 낮추기 버튼
                         Button(action:  {
                             if Int(selectedMinutesString)! > 0 {
@@ -103,6 +130,7 @@ struct ContentView: View {
                     
                     
                     Text(":")
+                        .font(.system(size: 20))
                     
                     VStack {
                         /// 초 올리기 버튼
@@ -129,7 +157,7 @@ struct ContentView: View {
                             }
                         ))
                         .frame(width: 40, height: 50)
-                        
+                        .font(.system(size: 20))
                         /// 초 낮추기 버튼
                         Button(action:  {
                             if Int(selectedSecondString)! > 0 {
@@ -142,6 +170,8 @@ struct ContentView: View {
                         })
                     }
                     
+                    /// 시간 설정 완료 버튼
+                    
                     Button(action: {
                         lastSeletcted = (Int(selectedHoursString)! * 3600)
                         + (Int(selectedMinutesString)! * 60)
@@ -151,9 +181,11 @@ struct ContentView: View {
                         
                     }, label: {
                         Image(systemName: setDone ? "gear" : "checkmark")
-                    }
-                           
-                    )
+                    })
+                    
+                    
+                    
+                    
                 }
                 
                 // 시간 설정 완료 후
@@ -163,6 +195,7 @@ struct ContentView: View {
                         
                         HStack {
                             Text("\(String(format: "%02d", timeRemaining / 3600)):\(String(format: "%02d", (timeRemaining % 3600) / 60)):\(String(format: "%02d", timeRemaining % 60))")
+                                .font(.system(size: 30))
                             Button(action: {
                                 
                                 setDone = false
@@ -181,8 +214,8 @@ struct ContentView: View {
                         HStack {
                             
                             Button(action: {
-//                                isRunning.toggle()
-//                                beepToggle.toggle()
+                                //                                isRunning.toggle()
+                                //                                beepToggle.toggle()
                                 if !isRunning {
                                     startTimer()
                                 } else {
@@ -193,8 +226,8 @@ struct ContentView: View {
                             }, label: {
                                 Image(systemName: isRunning ? "pause.fill" : "play.fill")
                                     .resizable()
-                                    .frame(width: 15, height: 20)
-                                    .padding()
+                                    .frame(width: 20, height: 20)
+                                
                                 
                             })
                             Button(action: {
@@ -205,9 +238,11 @@ struct ContentView: View {
                             }, label: {
                                 Image(systemName: "arrow.clockwise")
                                     .resizable()
-                                    .frame(width: 15, height: 20)
-                                    .padding()
+                                    .frame(width: 20, height: 20)
+                                
                             })
+                            
+                            
                         }
                         .font(.system(size: 30))
                     }
@@ -233,6 +268,11 @@ struct ContentView: View {
             //                }
             //            }
         }
+        
+        .onChange(of: isRunning) {
+            isOnTop = isRunning
+        }
+        .background(AlwaysOnTopView(window: NSApplication.shared.windows.first!, isAlwaysOnTop: isOnTop))
     }
     
     private func playAlarmSound() {
@@ -279,6 +319,7 @@ struct ContentView: View {
         timer = nil
         stopAlarmSound()
     }
+    
 }
 
 #Preview {
