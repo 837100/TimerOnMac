@@ -70,6 +70,7 @@ struct ContentView: View {
                         ))
                         .frame(width: 40, height: 50)
                         .font(.system(size: 20))
+                    
                         
                         /// 시간 낮추기 버튼
                         Button(action:  {
@@ -92,7 +93,7 @@ struct ContentView: View {
                         /// 분 올리기 버튼
                         Button(action:  {
                             if Int(selectedMinutesString)! < 59 {
-                                selectedMinutesString = String(Int(selectedMinutesString)! + 10)
+                                selectedMinutesString = String(Int(selectedMinutesString)! + 1)
                             } else if Int(selectedMinutesString)! >= 59 {
                                 selectedMinutesString = "00"
                             }
@@ -119,7 +120,7 @@ struct ContentView: View {
                         /// 분 낮추기 버튼
                         Button(action:  {
                             if Int(selectedMinutesString)! > 0 {
-                                selectedMinutesString = String(Int(selectedMinutesString)! - 10)
+                                selectedMinutesString = String(Int(selectedMinutesString)! - 1)
                             } else if Int(selectedMinutesString)! <= 0 {
                                 selectedMinutesString = "59"
                             }
@@ -136,7 +137,7 @@ struct ContentView: View {
                         /// 초 올리기 버튼
                         Button(action:  {
                             if Int(selectedSecondString)! < 59 {
-                                selectedSecondString = String(Int(selectedSecondString)! + 10)
+                                selectedSecondString = String(Int(selectedSecondString)! + 1)
                             } else if Int(selectedSecondString)! >= 59 {
                                 selectedSecondString = "00"
                             }
@@ -161,7 +162,7 @@ struct ContentView: View {
                         /// 초 낮추기 버튼
                         Button(action:  {
                             if Int(selectedSecondString)! > 0 {
-                                selectedSecondString = String(Int(selectedSecondString)! - 10)
+                                selectedSecondString = String(Int(selectedSecondString)! - 1)
                             } else if Int(selectedSecondString)! <= 0 {
                                 selectedSecondString = "59"
                             }
