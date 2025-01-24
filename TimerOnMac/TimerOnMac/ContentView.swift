@@ -45,23 +45,32 @@ struct ContentView: View {
         VStack {
             HStack {
                 if !setDone {
+                    /// 윈도우 고정 버튼
                     Button(){
-                        
                         isOnTop.toggle()
                     } label: {
                         Image(systemName: isOnTop ? "pin.fill" : "pin.slash")
                     }.buttonStyle(PlainButtonStyle())
+                    
                     VStack {
                         /// 시간 올리기 버튼
-                        Button(action:  {
-                            if Int(selectedHoursString)! < 23 {
-                                selectedHoursString = String(Int(selectedHoursString)! + 1)
-                            } else if Int(selectedHoursString)! >= 23 {
-                                selectedHoursString = "00"
+                        Image(systemName: "chevron.up.2")
+                            .onTapGesture {
+                                if Int(selectedHoursString)! < 23 {
+                                    selectedHoursString = String(Int(selectedHoursString)! + 1)
+                                } else if Int(selectedHoursString)! >= 23 {
+                                    selectedHoursString = "00"
+                                }
                             }
-                        }, label: {
-                            Image(systemName: "chevron.up.2")
-                        })
+                            .onLongPressGesture {
+                                if Int(selectedHoursString)! < 16 {
+                                    selectedHoursString = String(Int(selectedHoursString)! + 8)
+                                } else if Int(selectedHoursString)! >= 16 {
+                                    selectedHoursString = "00"
+                                }
+                            }
+                        
+                        /// 시간 입력 필드
                         TextField("HH", text: Binding(
                             get: { selectedHoursString },
                             set: { newValue in
@@ -70,36 +79,46 @@ struct ContentView: View {
                         ))
                         .frame(width: 40, height: 50)
                         .font(.system(size: 20))
-                    
+                        
                         
                         /// 시간 낮추기 버튼
-                        Button(action:  {
-                            if Int(selectedHoursString)! > 0 {
-                                selectedHoursString = String(Int(selectedHoursString)! - 1)
-                            } else if Int(selectedHoursString)! <= 0 {
-                                selectedHoursString = "23"
+                        Image(systemName: "chevron.down.2")
+                            .onTapGesture {
+                                if Int(selectedHoursString)! > 0 {
+                                    selectedHoursString = String(Int(selectedHoursString)! - 1)
+                                } else if Int(selectedHoursString)! <= 0 {
+                                    selectedHoursString = "23"
+                                }
                             }
-                        }, label: {
-                            Image(systemName: "chevron.down.2")
-                        })
-                        
+                            .onLongPressGesture {
+                                if Int(selectedHoursString)! > 6 {
+                                    selectedHoursString = String(Int(selectedHoursString)! - 6)
+                                } else if Int(selectedHoursString)! <= 6 {
+                                    selectedHoursString = "23"
+                                }
+                            }
                     }
-                    
                     
                     Text(":")
                         .font(.system(size: 20))
                     
                     VStack {
                         /// 분 올리기 버튼
-                        Button(action:  {
-                            if Int(selectedMinutesString)! < 59 {
-                                selectedMinutesString = String(Int(selectedMinutesString)! + 1)
-                            } else if Int(selectedMinutesString)! >= 59 {
-                                selectedMinutesString = "00"
+                        Image(systemName: "chevron.up.2")
+                            .onTapGesture {
+                                if Int(selectedMinutesString)! < 59 {
+                                    selectedMinutesString = String(Int(selectedMinutesString)! + 1)
+                                } else if Int(selectedMinutesString)! >= 59 {
+                                    selectedMinutesString = "00"
+                                }
                             }
-                        }, label: {
-                            Image(systemName: "chevron.up.2")
-                        })
+                            .onLongPressGesture {
+                                if Int(selectedMinutesString)! < 50 {
+                                    selectedMinutesString = String(Int(selectedMinutesString)! + 10)
+                                } else if Int(selectedMinutesString)! >= 50 {
+                                    selectedMinutesString = "00"
+                                }
+                            }
                         TextField("mm", text: Binding(
                             get: { selectedMinutesString },
                             set: { newValue in
@@ -118,15 +137,23 @@ struct ContentView: View {
                         .frame(width: 40, height: 50)
                         .font(.system(size: 20))
                         /// 분 낮추기 버튼
-                        Button(action:  {
-                            if Int(selectedMinutesString)! > 0 {
-                                selectedMinutesString = String(Int(selectedMinutesString)! - 1)
-                            } else if Int(selectedMinutesString)! <= 0 {
-                                selectedMinutesString = "59"
+                       
+                        Image(systemName: "chevron.down.2")
+                            .onTapGesture {
+                                if Int(selectedMinutesString)! > 0 {
+                                    selectedMinutesString = String(Int(selectedMinutesString)! - 1)
+                                } else if Int(selectedMinutesString)! <= 0 {
+                                    selectedMinutesString = "59"
+                                }
                             }
-                        }, label: {
-                            Image(systemName: "chevron.down.2")
-                        })
+                            .onLongPressGesture {
+                                if Int(selectedMinutesString)! > 10 {
+                                    selectedMinutesString = String(Int(selectedMinutesString)! - 10)
+                                } else if Int(selectedMinutesString)! <= 10 {
+                                    selectedMinutesString = "59"
+                                }
+                            }
+                        
                     }
                     
                     
@@ -135,15 +162,21 @@ struct ContentView: View {
                     
                     VStack {
                         /// 초 올리기 버튼
-                        Button(action:  {
-                            if Int(selectedSecondString)! < 59 {
-                                selectedSecondString = String(Int(selectedSecondString)! + 1)
-                            } else if Int(selectedSecondString)! >= 59 {
-                                selectedSecondString = "00"
+                        Image(systemName: "chevron.up.2")
+                            .onTapGesture {
+                                if Int(selectedSecondString)! < 59 {
+                                    selectedSecondString = String(Int(selectedSecondString)! + 1)
+                                } else if Int(selectedSecondString)! >= 59 {
+                                    selectedSecondString = "00"
+                                }
                             }
-                        }, label: {
-                            Image(systemName: "chevron.up.2")
-                        })
+                            .onLongPressGesture {
+                                if Int(selectedSecondString)! < 50 {
+                                    selectedSecondString = String(Int(selectedSecondString)! + 10)
+                                } else if Int(selectedSecondString)! >= 50 {
+                                    selectedSecondString = "00"
+                                }
+                            }
                         TextField("ss", text: Binding(
                             get: { selectedSecondString },
                             set: { newValue in
@@ -160,33 +193,32 @@ struct ContentView: View {
                         .frame(width: 40, height: 50)
                         .font(.system(size: 20))
                         /// 초 낮추기 버튼
-                        Button(action:  {
-                            if Int(selectedSecondString)! > 0 {
-                                selectedSecondString = String(Int(selectedSecondString)! - 1)
-                            } else if Int(selectedSecondString)! <= 0 {
-                                selectedSecondString = "59"
+                        Image(systemName: "chevron.down.2")
+                            .onTapGesture {
+                                if Int(selectedSecondString)! > 0 {
+                                    selectedSecondString = String(Int(selectedSecondString)! - 1)
+                                } else if Int(selectedSecondString)! <= 0 {
+                                    selectedSecondString = "59"
+                                }
                             }
-                        }, label: {
-                            Image(systemName: "chevron.down.2")
-                        })
+                            .onLongPressGesture {
+                                if Int(selectedSecondString)! > 10 {
+                                    selectedSecondString = String(Int(selectedSecondString)! - 10)
+                                } else if Int(selectedSecondString)! <= 10 {
+                                    selectedSecondString = "59"
+                                }
+                            }
                     }
                     
                     /// 시간 설정 완료 버튼
-                    
-                    Button(action: {
+                    Image(systemName: setDone ? "gear" : "checkmark")
+                        .onTapGesture {
                         lastSeletcted = (Int(selectedHoursString)! * 3600)
                         + (Int(selectedMinutesString)! * 60)
                         + Int(selectedSecondString)!
                         timeRemaining = lastSeletcted
                         setDone = true
-                        
-                    }, label: {
-                        Image(systemName: setDone ? "gear" : "checkmark")
-                    })
-                    
-                    
-                    
-                    
+                    }
                 }
                 
                 // 시간 설정 완료 후
