@@ -13,6 +13,8 @@ struct TimerOnMacApp: App {
         
         WindowGroup {
             ContentView()
+                .frame(minWidth: 250, idealWidth: 260, maxWidth: 900,
+                         minHeight: 140, idealHeight: 200, maxHeight: 600)
         }
 //        MenuBarExtra("Timer", systemImage: "fitness.timer") {
 //                   ContentView()

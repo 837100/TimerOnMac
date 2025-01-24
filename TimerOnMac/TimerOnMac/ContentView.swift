@@ -1,3 +1,10 @@
+//
+//  TimerOnMacApp.swift
+//  TimerOnMac
+//
+//  Created by SG on 1/24/25.
+//
+
 import SwiftUI
 import AVFoundation
 import Combine
