@@ -14,6 +14,6 @@
 
 ![Image](https://github.com/user-attachments/assets/f5d0a661-412e-4bca-8c23-0d1541103073)
 
-<h2>알람음 종료는 􀅈 버튼을 눌러 초기화 합니다. </h2>
+<h2>알람음은 초기화 버튼을 눌러 끌 수 있습니다. </h2>
 
 
