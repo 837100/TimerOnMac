@@ -33,24 +33,27 @@ struct AlwaysOnTopView: NSViewRepresentable {
 struct ContentView: View {
     
     @State private var audioPlayer: AVAudioPlayer?
-    @State private var isOnTop = true
+  
+    /// 화면 위에 고정 Bool 함수
+    @State private var isOnTop: Bool = true
     
-    @State private var selectedHoursString: String = "00"
-    @State private var selectedMinutesString: String = "10"
-    @State private var selectedSecondString: String = "00"
+    @AppStorage("selectedHoursString") private var selectedHoursString: String = "00"
+    @AppStorage("selectedMinutesString") private var selectedMinutesString: String = "10"
+    @AppStorage("selectedSecondString") private var selectedSecondString: String = "00"
+    @AppStorage("timeRemaining") private var timeRemaining: Int = 0
+    @AppStorage("setDone") private var setDone: Bool = false
+    @AppStorage("lastSeletcted") private var lastSeletcted: Int = 0
     
-    @State private var lastSeletcted: Int = 0
-    @State private var timeRemaining: Int = 0
     @State private var isRunning: Bool = false
-    @State private var setDone: Bool = false
     @State private var beepToggle: Bool = false
-    
     @State private var timer: AnyCancellable?
     
     
     var body: some View {
         VStack {
             HStack {
+                
+                /// 시간 설정이 안 되어 있을 때.
                 if !setDone {
                     /// 윈도우 고정 버튼
                     Button(){
@@ -227,8 +230,9 @@ struct ContentView: View {
                         setDone = true
                     }
                 }
+                 
                 
-                // 시간 설정 완료 후
+                /// 시간 설정 완료 후
                 if setDone {
                     
                     VStack {
@@ -237,22 +241,21 @@ struct ContentView: View {
                             
                             Text("\(String(format: "%02d", timeRemaining / 3600)):\(String(format: "%02d", (timeRemaining % 3600) / 60)):\(String(format: "%02d", timeRemaining % 60))")
                                 .font(.system(size: 30))
+                            
                             Button(action: {
-                                
                                 setDone = false
                                 isRunning = false
                                 beepToggle = false
                                 stopAlarmSound()
-                                
                             }, label: {
                                 Image(systemName: setDone ? "gear" : "checkmark")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
                             })
                         }
-                        
-                        .padding()
-                        
-                        
+        
                         HStack {
+                        
                             Button(){
                                 isOnTop.toggle()
                             } label: {
@@ -317,9 +320,9 @@ struct ContentView: View {
             //            }
         }
         
-        .onChange(of: isRunning) {
-            isOnTop = isRunning
-        }
+//        .onChange(of: isRunning) {
+//            isOnTop = isRunning
+//        }
         .background(AlwaysOnTopView(window: NSApplication.shared.windows.first!, isAlwaysOnTop: isOnTop))
     }
     
