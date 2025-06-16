@@ -342,14 +342,7 @@ struct ContentView: View {
                 }
                 
                 Button(action: {
-                    // 새 창에서 TimeRecordedList 열기
-                    let window = NSWindow(
-                        contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-                        styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                        backing: .buffered, defer: false)
-                    window.center()
-                    window.contentView = NSHostingView(rootView: TimeRecordedList())
-                    window.makeKeyAndOrderFront(nil)
+                    WindowManager.shared.showTimeRecordedList()
                 }) {
                     Image(systemName: "list.bullet")
                         .resizable()

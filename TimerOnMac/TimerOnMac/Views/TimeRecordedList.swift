@@ -52,18 +52,6 @@ struct TimeRecordedList: View {
         TimerRecord(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!.addingTimeInterval(-14400), duration: 2400, completedSuccessfully: true),
         // 이틀 전
         TimerRecord(date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, duration: 1200, completedSuccessfully: true),
-        // 어제
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, duration: 900, completedSuccessfully: false),
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!.addingTimeInterval(-7200), duration: 1800, completedSuccessfully: true),
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!.addingTimeInterval(-14400), duration: 2400, completedSuccessfully: true),
-        // 어제
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, duration: 900, completedSuccessfully: false),
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!.addingTimeInterval(-7200), duration: 1800, completedSuccessfully: true),
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!.addingTimeInterval(-14400), duration: 2400, completedSuccessfully: true),
-        // 어제
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!, duration: 900, completedSuccessfully: false),
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!.addingTimeInterval(-7200), duration: 1800, completedSuccessfully: true),
-        TimerRecord(date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!.addingTimeInterval(-14400), duration: 2400, completedSuccessfully: true),
     ]
     
     
