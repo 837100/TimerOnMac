@@ -330,6 +330,7 @@ struct ContentView: View {
             
             HStack {
                 Text("Recording Time")
+                
                 Button {
                     isTimeRecording.toggle()
                 } label: {
@@ -338,6 +339,21 @@ struct ContentView: View {
                         .foregroundStyle(isTimeRecording ? .blue : .gray)
                         .font(.system(size: 14))
                         .bold()
+                }
+                
+                Button(action: {
+                    // 새 창에서 TimeRecordedList 열기
+                    let window = NSWindow(
+                        contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
+                        styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                        backing: .buffered, defer: false)
+                    window.center()
+                    window.contentView = NSHostingView(rootView: TimeRecordedList())
+                    window.makeKeyAndOrderFront(nil)
+                }) {
+                    Image(systemName: "list.bullet")
+                        .resizable()
+                        .frame(width: 10, height: 10)
                 }
             }
             HStack {
